@@ -1,0 +1,183 @@
+{
+  "info": {
+    "name": "Hintro Mock API",
+    "_postman_id": "hintro-mock-api-v1",
+    "description": "Complete API collection for the Hintro Mock Backend.\n\nBase URL: https://mock-backend-hintro.vercel.app\n\nAll endpoints require the `x-user-id` header:\n- `u1` → Empty state (no call history)\n- `u2` → Filled state (real data)\n\nSet the `userId` collection variable to switch between users.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://mock-backend-hintro.vercel.app",
+      "type": "string",
+      "description": "Base URL of the Hintro Mock API"
+    },
+    {
+      "key": "userId",
+      "value": "u2",
+      "type": "string",
+      "description": "Active user ID — u1 (empty state) or u2 (filled state)"
+    },
+    {
+      "key": "limit",
+      "value": "10",
+      "type": "string",
+      "description": "Number of call sessions per page"
+    },
+    {
+      "key": "page",
+      "value": "1",
+      "type": "string",
+      "description": "Page number for paginated endpoints"
+    },
+    {
+      "key": "sessionId",
+      "value": "cs1",
+      "type": "string",
+      "description": "A specific call session ID for detail lookup"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Verify the API server is running. No authentication required."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{userId}}",
+                "description": "User ID (u1 or u2)"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "profile"]
+            },
+            "description": "Returns the user profile for the given `x-user-id`.\n\n**Response fields:**\n- `id` — User ID\n- `email` — User email\n- `firstName` / `lastName` — Display name\n- `login_method` — `google` or `email`\n- `status` — `active`\n- `createdAt` / `updatedAt`"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{userId}}",
+                "description": "User ID (u1 or u2)"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "dashboard"]
+            },
+            "description": "Returns an aggregated dashboard payload with user info, subscription details, and usage metrics.\n\n**Response fields:**\n- `user` — Same as /api/auth/profile\n- `subscription.plan` — `free` | `professional`\n- `subscription.billing_cycle` — `monthly` | `annual`\n- `subscription.status` — `active`\n- `usage.kb_files` — `{ used, limit, percentage }`\n- `usage.vocab_terms` — Number\n- `usage.notes` — Number"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Call Sessions",
+      "item": [
+        {
+          "name": "Get Call Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{userId}}",
+                "description": "User ID (u1 or u2)"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/call-sessions/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "call-sessions", "stats"]
+            },
+            "description": "Returns aggregate call statistics for the user.\n\n**Response fields:**\n- `totalSessions` — Total number of call sessions\n- `averageDuration` — Average duration in **seconds** (convert: `Math.floor(s/60)m ${s%60}sec`)\n- `totalAIInteractions` — Total AI interactions count\n- `lastSession` — Array of ISO date strings (most recent sessions first)\n\n**Example (u2):**\n```json\n{\n  \"totalSessions\": 12,\n  \"averageDuration\": 3187,\n  \"totalAIInteractions\": 8,\n  \"lastSession\": [\"2026-05-09T15:15:11.831Z\", ...]\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Call History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{userId}}",
+                "description": "User ID (u1 or u2)"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/call-sessions?limit={{limit}}&page={{page}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "call-sessions"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "{{limit}}",
+                  "description": "Number of sessions per page (default: 10, max: 50)"
+                },
+                {
+                  "key": "page",
+                  "value": "{{page}}",
+                  "description": "Page number (1-indexed)"
+                }
+              ]
+            },
+            "description": "Returns paginated call session history.\n\n**Response shape:**\n```json\n{\n  \"callSessions\": [ ...sessions ],\n  \"pagination\": {\n    \"page\": 1,\n    \"limit\": 10,\n    \"totalCount\": 10,\n    \"totalPages\": 1,\n    \"hasNextPage\": false,\n    \"hasPrevPage\": false\n  }\n}\n```\n\n**Session fields:**\n- `_id` — Session ID (e.g. `cs1`)\n- `user_id` — Owner user ID\n- `status` — `ended` | `force_ended`\n- `client` — Client/company name\n- `description` — Call type/description\n- `started_at` / `ended_at` — ISO timestamps\n- `total_duration_seconds` — Duration in seconds\n- `ai_interactions` — AI interaction count\n- `participants` — Array of `{ name, isUser }`"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Call Session",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "{{userId}}",
+                "description": "User ID (u1 or u2)"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/call-sessions/{{sessionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "call-sessions", "{{sessionId}}"]
+            },
+            "description": "Returns full details for a single call session by ID.\n\nChange the `sessionId` collection variable to look up different sessions (e.g. `cs1`, `cs2`, …)."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

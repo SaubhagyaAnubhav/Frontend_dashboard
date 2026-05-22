@@ -28,8 +28,11 @@ export const useApi = (apiFunction, options = {}) => {
   const [loading, setLoading] = useState(enabled)
   const [error, setError] = useState(null)
 
-  // Track if component is mounted to prevent state updates after unmount
-  const isMountedRef = useRef(true)
+  // Track the latest apiFunction without triggering re-renders
+  const apiFunctionRef = useRef(apiFunction)
+  useEffect(() => {
+    apiFunctionRef.current = apiFunction
+  }, [apiFunction])
 
   /**
    * Fetch data from API
@@ -43,23 +46,15 @@ export const useApi = (apiFunction, options = {}) => {
       setLoading(true)
       setError(null)
 
-      const result = await apiFunction()
-
-      // Only update state if component is still mounted
-      if (isMountedRef.current) {
-        setData(result)
-      }
+      const result = await apiFunctionRef.current()
+      setData(result)
     } catch (err) {
-      if (isMountedRef.current) {
-        setError(err)
-        console.error('API Error:', err)
-      }
+      setError(err)
+      console.error('API Error:', err)
     } finally {
-      if (isMountedRef.current) {
-        setLoading(false)
-      }
+      setLoading(false)
     }
-  }, [apiFunction, enabled])
+  }, [enabled])
 
   /**
    * Manual refetch function
@@ -70,23 +65,11 @@ export const useApi = (apiFunction, options = {}) => {
 
   /**
    * Fetch data on mount and when dependencies change
-   *
-   * Note: fetchData is wrapped in useCallback and is safe to call in effect.
-   * The setState calls inside fetchData are intentional and controlled.
    */
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchData()
   }, [fetchData, userId, ...deps]) // eslint-disable-line react-hooks/exhaustive-deps
-
-  /**
-   * Cleanup on unmount
-   */
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false
-    }
-  }, [])
 
   return {
     data,

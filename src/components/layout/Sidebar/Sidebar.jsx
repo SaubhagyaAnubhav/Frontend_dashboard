@@ -5,40 +5,64 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { useProfile } from '@/hooks'
 import FeedbackModal from '@/components/features/FeedbackModal'
 
-const Sidebar = ({ className = '', onLogout, onClose }) => {
+const Sidebar = ({ className = '', onClose }) => {
   const navigate = useNavigate()
   const location = useLocation()
-  const profile = useProfile()
   const [showFeedbackModal, setShowFeedbackModal] = useState(false)
 
   const navItems = [
     {
       name: 'Dashboard',
-      icon: 'M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 13a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1v-7z',
+      icon: (
+        <>
+          <rect width="7" height="9" x="3" y="3" rx="1" />
+          <rect width="7" height="5" x="14" y="3" rx="1" />
+          <rect width="7" height="9" x="14" y="12" rx="1" />
+          <rect width="7" height="5" x="3" y="16" rx="1" />
+        </>
+      ),
       path: '/dashboard',
     },
     {
       name: 'Call Insights',
-      icon: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
+      icon: (
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" />
+      ),
       path: '/calls',
     },
     {
       name: 'Knowledge Base',
-      icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+      icon: (
+        <>
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10 9 9 9 8 9" />
+        </>
+      ),
       path: '/knowledge',
+      hasInfo: true,
     },
     {
       name: 'Prompts',
-      icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
+      icon: <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />,
       path: '/prompts',
+      hasInfo: true,
     },
     {
-      name: 'Busy Controls',
-      icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+      name: 'Boxy Controls',
+      icon: (
+        <>
+          <circle cx="12" cy="12" r="10" />
+          <line x1="2" y1="12" x2="22" y2="12" />
+          <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+        </>
+      ),
       path: '/busy-controls',
+      hasInfo: true,
     },
   ]
 
@@ -71,19 +95,16 @@ const Sidebar = ({ className = '', onLogout, onClose }) => {
           </button>
         )}
 
-        {/* Logo */}
-        <div className="flex h-16 items-center border-b border-neutral-200 px-6">
-          <div className="flex items-center gap-2">
-            <div className="bg-primary-500 flex h-8 w-8 items-center justify-center rounded-lg">
-              <span className="text-lg font-bold text-white">H</span>
-            </div>
-            <span className="text-xl font-bold text-neutral-900">Hintro</span>
-          </div>
+        {/* Logo (Figma match - just premium text Hintro, no border-b, no square badge) */}
+        <div className="mt-2 flex h-20 items-center px-8">
+          <span className="font-display text-[28px] font-bold tracking-wide text-neutral-900">
+            Hintro
+          </span>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto p-4">
-          <ul className="space-y-1">
+        <nav className="flex-1 overflow-y-auto px-5 py-2">
+          <ul className="space-y-1.5">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path
 
@@ -91,100 +112,107 @@ const Sidebar = ({ className = '', onLogout, onClose }) => {
                 <li key={item.name}>
                   <button
                     onClick={() => handleNavClick(item.path)}
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                    className={`flex w-full items-center gap-3 rounded-lg px-3.5 py-3 text-sm font-medium transition-colors ${
                       isActive
-                        ? 'bg-primary-50 text-primary-700'
-                        : 'text-neutral-700 hover:bg-neutral-100'
+                        ? 'bg-[#eef2ff] text-[#4f46e5]'
+                        : 'text-neutral-700 hover:bg-neutral-50'
                     }`}
                   >
-                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d={item.icon}
-                      />
+                    <svg
+                      className="h-5 w-5 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      {item.icon}
                     </svg>
-                    <span className="flex-1 text-left">{item.name}</span>
+                    <span className="text-left">{item.name}</span>
+                    {item.hasInfo && (
+                      <svg
+                        className="ml-auto h-4 w-4 text-neutral-400"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="16" x2="12" y2="12" />
+                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                      </svg>
+                    )}
                   </button>
                 </li>
               )
             })}
           </ul>
+        </nav>
 
-          {/* Feedback Section */}
-          <div className="mt-6 border-t border-neutral-200 pt-4">
-            <button
-              onClick={() => navigate('/feedback-history')}
-              className="mb-2 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-100"
+        {/* Anchored downside section matching Figma empty state */}
+        <div className="space-y-1 border-t border-neutral-200 p-5">
+          {/* Feedback History Button */}
+          <button
+            onClick={() => {
+              navigate('/feedback-history')
+              if (onClose) {
+                onClose()
+              }
+            }}
+            className="flex w-full items-center gap-3 rounded-lg px-3.5 py-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
+          >
+            {/* Inbox SVG */}
+            <svg
+              className="h-5 w-5 flex-shrink-0 text-neutral-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="flex-1 text-left">Feedback History</span>
-            </button>
-            <button
-              onClick={() => setShowFeedbackModal(true)}
-              className="mb-4 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-100"
-            >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-                />
-              </svg>
-              <span className="flex-1 text-left">Feedback</span>
-            </button>
+              <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
+              <path d="M5.45 5.11L2 12v6a2 2 0 002 2h16a2 2 0 002-2v-6l-3.45-6.89A2 2 0 0016.76 4H7.24a2 2 0 00-1.79 1.11z" />
+            </svg>
+            <span className="flex-1 text-left">Feedback History</span>
+          </button>
 
-            {/* Upgrade Button */}
-            <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-neutral-800 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-900">
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                />
-              </svg>
+          {/* Feedback Button */}
+          <button
+            onClick={() => {
+              setShowFeedbackModal(true)
+              if (onClose) {
+                onClose()
+              }
+            }}
+            className="flex w-full items-center gap-3 rounded-lg px-3.5 py-3 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50"
+          >
+            {/* Gift Box SVG */}
+            <svg
+              className="h-5 w-5 flex-shrink-0 text-neutral-500"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="20 12 20 22 4 22 4 12" />
+              <rect x="2" y="7" width="20" height="5" />
+              <line x1="12" y1="22" x2="12" y2="7" />
+              <path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" />
+              <path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" />
+            </svg>
+            <span className="flex-1 text-left">Feedback</span>
+          </button>
+
+          {/* Upgrade Pill Button */}
+          <div className="pt-3">
+            <button className="flex w-full items-center justify-center rounded-lg bg-[#828282] py-2.5 text-xs font-semibold text-white transition-colors hover:bg-neutral-600">
               Upgrade
             </button>
           </div>
-        </nav>
-
-        {/* User Section */}
-        <div className="border-t border-neutral-200 p-4">
-          <div className="mb-3 flex items-center gap-3 rounded-lg p-2">
-            <div className="bg-primary-100 text-primary-700 flex h-10 w-10 items-center justify-center rounded-full font-semibold">
-              {profile.data?.firstName?.[0] || 'U'}
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-neutral-900">
-                {profile.data?.firstName} {profile.data?.lastName}
-              </p>
-              <p className="truncate text-xs text-neutral-600">{profile.data?.email}</p>
-            </div>
-          </div>
-          <button
-            onClick={onLogout}
-            className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-100"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            Logout
-          </button>
         </div>
       </aside>
 
@@ -196,7 +224,6 @@ const Sidebar = ({ className = '', onLogout, onClose }) => {
 
 Sidebar.propTypes = {
   className: PropTypes.string,
-  onLogout: PropTypes.func,
   onClose: PropTypes.func,
 }
 

@@ -20,11 +20,6 @@ const FeedbackHistoryPage = () => {
     return stored ? JSON.parse(stored) : []
   })
 
-  const handleLogout = () => {
-    localStorage.removeItem('auth_token')
-    navigate('/login')
-  }
-
   const handleDelete = (id) => {
     const updated = feedbackList.filter((item) => item.id !== id)
     setFeedbackList(updated)
@@ -34,7 +29,7 @@ const FeedbackHistoryPage = () => {
   return (
     <div className="flex h-screen overflow-hidden bg-neutral-50">
       {/* Sidebar - Desktop */}
-      <Sidebar className="hidden lg:flex" onLogout={handleLogout} />
+      <Sidebar className="hidden lg:flex" />
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
@@ -44,7 +39,7 @@ const FeedbackHistoryPage = () => {
             onClick={() => setMobileMenuOpen(false)}
           />
           <div className="fixed inset-y-0 left-0 z-50 lg:hidden">
-            <Sidebar onLogout={handleLogout} onClose={() => setMobileMenuOpen(false)} />
+            <Sidebar onClose={() => setMobileMenuOpen(false)} />
           </div>
         </>
       )}
