@@ -1,7 +1,4 @@
-/**
- * Stub Page — reusable placeholder for unimplemented routes
- * Used for: Call Insights, Knowledge Base, Prompts, Busy Controls
- */
+
 
 import PropTypes from 'prop-types'
 import { useNavigate } from 'react-router-dom'
@@ -14,10 +11,10 @@ const StubPage = ({ title, icon }) => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-white">
-      {/* Sidebar Desktop */}
+
       <Sidebar className="hidden lg:flex" />
 
-      {/* Mobile Overlay */}
+
       {mobileMenuOpen && (
         <>
           <div
@@ -30,9 +27,9 @@ const StubPage = ({ title, icon }) => {
         </>
       )}
 
-      {/* Main */}
+
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Header */}
+
         <header className="flex h-16 flex-shrink-0 items-center justify-between border-b border-neutral-200 bg-white px-6">
           <div className="flex items-center gap-4">
             <button
@@ -52,7 +49,7 @@ const StubPage = ({ title, icon }) => {
           </div>
         </header>
 
-        {/* Body */}
+        
         <main className="flex flex-1 flex-col items-center justify-center bg-white">
           <div className="flex flex-col items-center gap-4 text-center">
             <div className="flex h-16 w-16 items-center justify-center rounded-full bg-neutral-100">

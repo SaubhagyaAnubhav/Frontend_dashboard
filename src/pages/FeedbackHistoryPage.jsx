@@ -1,8 +1,4 @@
-/**
- * Feedback History Page
- *
- * Shows all submitted feedback from localStorage
- */
+
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -15,7 +11,7 @@ const FeedbackHistoryPage = () => {
   const profile = useProfile()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [feedbackList, setFeedbackList] = useState(() => {
-    // Load feedback from localStorage
+
     const stored = localStorage.getItem('hintro_feedback')
     return stored ? JSON.parse(stored) : []
   })
@@ -28,10 +24,10 @@ const FeedbackHistoryPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-neutral-50">
-      {/* Sidebar - Desktop */}
+
       <Sidebar className="hidden lg:flex" />
 
-      {/* Mobile Menu Overlay */}
+
       {mobileMenuOpen && (
         <>
           <div
@@ -44,14 +40,14 @@ const FeedbackHistoryPage = () => {
         </>
       )}
 
-      {/* Main Content */}
+
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Header */}
+
         <Header onMenuClick={() => setMobileMenuOpen(true)} profile={profile} />
 
-        {/* Page Content */}
+
         <main className="flex-1 overflow-y-auto bg-white">
-          {/* Page Header */}
+
           <div className="border-b border-neutral-200 bg-white px-6 py-6">
             <div className="flex items-center justify-between">
               <div>
@@ -67,7 +63,7 @@ const FeedbackHistoryPage = () => {
             </div>
           </div>
 
-          {/* Feedback List */}
+
           <div className="p-6">
             {feedbackList.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12">
@@ -111,7 +107,7 @@ const FeedbackHistoryPage = () => {
   )
 }
 
-// Feedback Card Component
+
 const FeedbackCard = ({ feedback, onDelete }) => {
   return (
     <div className="rounded-lg border border-neutral-200 bg-white p-6">

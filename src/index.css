@@ -1,24 +1,13 @@
-/**
- * Global Styles
- * 
- * Order:
- * 1. Tailwind import
- * 2. Theme variables
- * 3. Font imports
- * 4. Base styles
- * 5. Custom utilities
- */
 
-/* ===== Tailwind CSS v4 Import ===== */
 @import 'tailwindcss';
 
-/* ===== Theme Variables ===== */
+
 @import './styles/theme.css';
 
-/* ===== Font Import (Inter) ===== */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* ===== Base Styles ===== */
+
 * {
   box-sizing: border-box;
 }
@@ -36,7 +25,7 @@ body {
   min-height: 100vh;
 }
 
-/* Scrollbar Styling */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -55,20 +44,19 @@ body {
   background: var(--color-text-tertiary);
 }
 
-/* Focus Styles */
+
 *:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
 }
 
-/* Selection Styles */
+
 ::selection {
   background: var(--color-primary-light);
   color: var(--color-primary-dark);
 }
 
-/* ===== Component Styles ===== */
-/* Container */
+
 .container-custom {
   width: 100%;
   margin-left: auto;
@@ -92,7 +80,7 @@ body {
   }
 }
 
-/* Card Base */
+
 .card {
   background-color: var(--color-bg-card);
   border-radius: var(--radius-lg);
@@ -105,7 +93,6 @@ body {
   box-shadow: var(--shadow-card-hover);
 }
 
-/* Button Base */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -155,7 +142,7 @@ body {
   background-color: var(--color-bg-tertiary);
 }
 
-/* Input Base */
+
 .input {
   width: 100%;
   padding: 0.5rem 1rem;
@@ -170,7 +157,7 @@ body {
   box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
-/* Badge Base */
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -195,13 +182,12 @@ body {
   box-shadow: var(--shadow-lg);
 }
 
-/* ===== Utility Classes ===== */
-/* Text Utilities */
+
 .text-balance {
   text-wrap: balance;
 }
 
-/* Truncate Multi-line */
+
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -223,7 +209,7 @@ body {
   overflow: hidden;
 }
 
-/* Animation Utilities */
+
 .animate-in {
   animation: fadeIn var(--transition-base);
 }
@@ -232,7 +218,7 @@ body {
   animation: slideUp var(--transition-slow);
 }
 
-/* Gradient Utilities */
+
 .gradient-primary {
   background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
 }
@@ -241,14 +227,14 @@ body {
   background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
 }
 
-/* Glass Morphism */
+
 .glass {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Hide Scrollbar */
+
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -258,7 +244,7 @@ body {
   display: none;
 }
 
-/* ===== Animations ===== */
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -299,7 +285,7 @@ body {
   }
 }
 
-/* ===== Responsive Utilities ===== */
+
 @media (max-width: 768px) {
   :root {
     --sidebar-width: 100%;
@@ -307,7 +293,7 @@ body {
   }
 }
 
-/* ===== Print Styles ===== */
+
 @media print {
   body {
     background-color: white;

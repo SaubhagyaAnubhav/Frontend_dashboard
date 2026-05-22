@@ -1,8 +1,3 @@
-/**
- * Login Page
- *
- * High-fidelity centered login form matching Figma design (384px width, 291px height)
- */
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -25,9 +20,9 @@ const LoginPage = () => {
 
     setLoading(true)
 
-    // Simulate API call
+
     setTimeout(() => {
-      // Store auth token (mock)
+
       localStorage.setItem('auth_token', 'mock_token_12345')
       toast.success('Login successful!')
       navigate('/dashboard')
@@ -37,13 +32,13 @@ const LoginPage = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-neutral-50 px-4">
-      {/* Figma standard login card frame: 384px width, 291px height on desktop */}
+
       <div className="w-[384px] rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
-        {/* Title Inside Card */}
+
         <h1 className="mb-5 text-center text-lg font-semibold text-neutral-900">Login</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Email Field */}
+
           <div>
             <label htmlFor="email" className="mb-1 block text-xs font-medium text-neutral-600">
               Email
@@ -71,7 +66,7 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Password Field */}
+
           <div>
             <label htmlFor="password" className="mb-1 block text-xs font-medium text-neutral-600">
               Password
@@ -120,7 +115,7 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Submit Button */}
+
           <button
             type="submit"
             disabled={loading}
@@ -130,7 +125,7 @@ const LoginPage = () => {
           </button>
         </form>
 
-        {/* Sign Up Link */}
+        
         <div className="mt-4 text-center">
           <p className="text-xs text-neutral-600">
             Don't you have an account?{' '}

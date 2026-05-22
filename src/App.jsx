@@ -11,7 +11,7 @@ import {
   BusyControlsPage,
 } from '@/pages/StubPage'
 
-// Protected Route wrapper
+
 const ProtectedRoute = ({ children }) => {
   const isAuthenticated = localStorage.getItem('auth_token')
   return isAuthenticated ? children : <Navigate to="/login" replace />
@@ -43,10 +43,10 @@ function App() {
         />
 
         <Routes>
-          {/* Public */}
+
           <Route path="/login" element={<LoginPage />} />
 
-          {/* Protected */}
+
           <Route
             path="/dashboard"
             element={
@@ -96,7 +96,7 @@ function App() {
             }
           />
 
-          {/* Fallback */}
+          
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>

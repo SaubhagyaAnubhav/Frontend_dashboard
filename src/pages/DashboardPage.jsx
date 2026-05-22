@@ -1,16 +1,3 @@
-/**
- * Dashboard Page
- *
- * Pixel-perfect match of the Figma design:
- * - Sidebar with nav items
- * - Header with Dashboard title, Watch Tutorial button, user avatar
- * - Welcome section with "Start New Call" button
- * - 4 stat cards (circular icons) from mock API
- * - Recent calls section with date grouping from mock API
- * - Empty state (u1) and filled state (u2)
- * - Logout confirmation modal
- */
-
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useUser } from '@/context/UserContext'
@@ -35,10 +22,10 @@ const DashboardPage = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-white">
-      {/* ── Sidebar Desktop ── */}
+
       <Sidebar className="hidden lg:flex" />
 
-      {/* ── Mobile Sidebar Overlay ── */}
+
       {mobileMenuOpen && (
         <>
           <div
@@ -51,11 +38,11 @@ const DashboardPage = () => {
         </>
       )}
 
-      {/* ── Main Content Area ── */}
+
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* ── Top Header ── */}
+
         <header className="flex h-16 flex-shrink-0 items-center justify-between border-b border-neutral-200 bg-white px-6">
-          {/* Left: hamburger (mobile) + title */}
+
           <div className="flex items-center gap-4">
             <button
               onClick={() => setMobileMenuOpen(true)}
@@ -73,9 +60,9 @@ const DashboardPage = () => {
             <h1 className="text-base font-semibold text-neutral-900">Dashboard</h1>
           </div>
 
-          {/* Right: Watch Tutorial + user avatar + chevron */}
+
           <div className="flex items-center gap-3">
-            {/* Watch Tutorial */}
+
             <button className="hidden items-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs font-medium text-neutral-600 hover:bg-neutral-50 sm:flex">
               <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
@@ -83,7 +70,7 @@ const DashboardPage = () => {
               Watch Tutorial
             </button>
 
-            {/* User Avatar Dropdown */}
+
             <div className="relative">
               <button
                 onClick={() => setShowAvatarMenu(!showAvatarMenu)}
@@ -142,9 +129,9 @@ const DashboardPage = () => {
           </div>
         </header>
 
-        {/* ── Scrollable Page Body ── */}
+
         <main className="flex-1 overflow-y-auto bg-white">
-          {/* ── Welcome Banner ── */}
+
           <div className="flex items-center justify-between border-b border-neutral-100 px-6 py-5">
             <div>
               <p className="text-base font-semibold text-neutral-900">
@@ -159,9 +146,9 @@ const DashboardPage = () => {
             </button>
           </div>
 
-          {/* ── Dashboard Body ── */}
+
           <div className="p-6">
-            {/* User Switcher — testing aid */}
+
             <div className="mb-5 flex items-center gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
               <p className="flex-1 text-xs font-medium text-amber-800">
                 Switch users to test empty / filled states:
@@ -195,7 +182,7 @@ const DashboardPage = () => {
         </main>
       </div>
 
-      {/* ── Logout Confirmation Modal ── */}
+
       {showLogoutModal && (
         <LogoutModal onCancel={() => setShowLogoutModal(false)} onConfirm={confirmLogout} />
       )}
@@ -203,12 +190,10 @@ const DashboardPage = () => {
   )
 }
 
-/* ─────────────────────────────────────────────
-   EMPTY STATE  (u1)
-───────────────────────────────────────────── */
+
 const EmptyState = () => (
   <div className="space-y-6">
-    {/* Stat cards — all zeros */}
+
     <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
       <StatCard title="Total Sessions" value="0" color="red" />
       <StatCard title="Average Duration" value="0" color="blue" />
@@ -216,7 +201,7 @@ const EmptyState = () => (
       <StatCard title="Last Session" value="-" color="purple" />
     </div>
 
-    {/* Recent Calls — empty */}
+
     <div>
       <h2 className="mb-4 text-center text-sm font-semibold text-neutral-900">Recent calls</h2>
       <div className="rounded-xl border border-neutral-200 bg-white">
@@ -379,7 +364,7 @@ const FilledState = ({ stats, history }) => {
                 <div className="bg-neutral-50 px-5 py-2">
                   <p className="text-xs font-medium text-neutral-500">{dateLabel}</p>
                 </div>
-                
+
                 {calls.map((call) => (
                   <CallItem key={call._id || call.id} call={call} formatDuration={formatDuration} />
                 ))}
@@ -392,9 +377,7 @@ const FilledState = ({ stats, history }) => {
   )
 }
 
-/* ─────────────────────────────────────────────
-   STAT CARD
-───────────────────────────────────────────── */
+
 const STAT_COLORS = {
   red: {
     bg: 'bg-red-100',
@@ -480,9 +463,7 @@ const StatCard = ({ title, value, color }) => {
   )
 }
 
-/* ─────────────────────────────────────────────
-   CALL ITEM
-───────────────────────────────────────────── */
+
 const CallItem = ({ call, formatDuration }) => {
   const formatTime = (dateString) => {
     if (!dateString) {
@@ -502,20 +483,20 @@ const CallItem = ({ call, formatDuration }) => {
   return (
     <div className="flex items-center justify-between px-5 py-3.5 transition-colors hover:bg-neutral-50">
       <div className="flex items-center gap-3">
-        {/* Circular badge with client initial */}
+
         <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500">
           <span className="text-sm font-semibold text-white">
             {(call.client || call.description || 'C')[0].toUpperCase()}
           </span>
         </div>
 
-        {/* Call details */}
+
         <div>
           <p className="text-sm font-medium text-neutral-900">
             {call.description || call.client || 'Call Session'}
           </p>
           <div className="mt-0.5 flex items-center gap-2">
-            {/* Gold stars */}
+
             <span className="text-xs text-yellow-400">★★★</span>
             {call.total_duration_seconds > 0 && (
               <>
@@ -529,7 +510,7 @@ const CallItem = ({ call, formatDuration }) => {
         </div>
       </div>
 
-      {/* Right: time + 3-dot menu */}
+
       <div className="flex items-center gap-3">
         <span className="text-xs text-neutral-500">{formatTime(call.started_at)}</span>
         <button className="rounded p-1 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-600">
@@ -542,9 +523,7 @@ const CallItem = ({ call, formatDuration }) => {
   )
 }
 
-/* ─────────────────────────────────────────────
-   LOGOUT MODAL
-───────────────────────────────────────────── */
+
 const LogoutModal = ({ onCancel, onConfirm }) => (
   <div className="fixed inset-0 z-[1400] flex items-center justify-center p-4">
     <div className="absolute inset-0 bg-black/40" onClick={onCancel} aria-hidden="true" />

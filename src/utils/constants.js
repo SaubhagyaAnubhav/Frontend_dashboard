@@ -1,21 +1,11 @@
-/**
- * Application Constants
- *
- * Centralized location for all app-wide constants
- * Benefits:
- * - Single source of truth
- * - Easy to update
- * - Type-safe with JSDoc
- */
 
-// ===== API Configuration =====
 export const API_CONFIG = {
   BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://mock-backend-hintro.vercel.app',
-  TIMEOUT: 10000, // 10 seconds
+  TIMEOUT: 10000,
   RETRY_ATTEMPTS: 3,
 }
 
-// ===== API Endpoints =====
+
 export const API_ENDPOINTS = {
   HEALTH: '/health',
   AUTH: {
@@ -28,13 +18,13 @@ export const API_ENDPOINTS = {
   },
 }
 
-// ===== User IDs =====
+
 export const USER_IDS = {
-  EMPTY_STATE: 'u1', // User with no data
-  FILLED_STATE: 'u2', // User with random data
+  EMPTY_STATE: 'u1',
+  FILLED_STATE: 'u2',
 }
 
-// ===== Local Storage Keys =====
+
 export const STORAGE_KEYS = {
   USER_ID: 'hintro_user_id',
   FEEDBACK: 'hintro_feedback',
@@ -42,7 +32,7 @@ export const STORAGE_KEYS = {
   AUTH_TOKEN: 'hintro_auth_token',
 }
 
-// ===== App Routes =====
+
 export const ROUTES = {
   HOME: '/',
   DASHBOARD: '/dashboard',
@@ -52,7 +42,7 @@ export const ROUTES = {
   BOXY_CONTROLS: '/boxy-controls',
 }
 
-// ===== Navigation Items =====
+
 export const NAV_ITEMS = [
   {
     id: 'dashboard',
@@ -89,7 +79,7 @@ export const NAV_ITEMS = [
   },
 ]
 
-// ===== Stat Card Types =====
+
 export const STAT_TYPES = {
   TOTAL_SESSIONS: 'total_sessions',
   AVERAGE_DURATION: 'average_duration',
@@ -97,14 +87,14 @@ export const STAT_TYPES = {
   LAST_SESSION: 'last_session',
 }
 
-// ===== Time Formats =====
+
 export const TIME_FORMATS = {
-  SHORT: 'short', // "2h 30m"
-  LONG: 'long', // "2 hours 30 minutes"
-  FULL: 'full', // "2h 30m 45s"
+  SHORT: 'short',
+  LONG: 'long',
+  FULL: 'full',
 }
 
-// ===== Date Formats =====
+
 export const DATE_FORMATS = {
   SHORT: 'MMM DD', // "Jan 15"
   MEDIUM: 'MMM DD, YYYY', // "Jan 15, 2024"
@@ -113,7 +103,7 @@ export const DATE_FORMATS = {
   RELATIVE: 'relative', // "2 days ago"
 }
 
-// ===== Feedback Ratings =====
+
 export const FEEDBACK_RATINGS = [
   { value: 1, emoji: '😞', label: 'Very Dissatisfied' },
   { value: 2, emoji: '😕', label: 'Dissatisfied' },
@@ -122,14 +112,14 @@ export const FEEDBACK_RATINGS = [
   { value: 5, emoji: '😄', label: 'Very Satisfied' },
 ]
 
-// ===== Pagination =====
+
 export const PAGINATION = {
   DEFAULT_LIMIT: 10,
   MAX_LIMIT: 50,
   DEFAULT_PAGE: 1,
 }
 
-// ===== Breakpoints (matches Tailwind) =====
+
 export const BREAKPOINTS = {
   SM: 640,
   MD: 768,
@@ -138,7 +128,7 @@ export const BREAKPOINTS = {
   '2XL': 1536,
 }
 
-// ===== Animation Durations (ms) =====
+
 export const ANIMATION = {
   FAST: 150,
   BASE: 200,
@@ -146,7 +136,7 @@ export const ANIMATION = {
   SLOWER: 500,
 }
 
-// ===== Toast Configuration =====
+
 export const TOAST_CONFIG = {
   DURATION: 3000,
   POSITION: 'top-right',
@@ -156,7 +146,7 @@ export const TOAST_CONFIG = {
   INFO_ICON: 'ℹ',
 }
 
-// ===== Error Messages =====
+
 export const ERROR_MESSAGES = {
   NETWORK_ERROR: 'Network error. Please check your connection.',
   API_ERROR: 'Something went wrong. Please try again.',
@@ -166,14 +156,14 @@ export const ERROR_MESSAGES = {
   VALIDATION_ERROR: 'Please check your input and try again.',
 }
 
-// ===== Success Messages =====
+
 export const SUCCESS_MESSAGES = {
   FEEDBACK_SUBMITTED: 'Thank you for your feedback!',
   PROFILE_UPDATED: 'Profile updated successfully.',
   SETTINGS_SAVED: 'Settings saved successfully.',
 }
 
-// ===== Empty State Messages =====
+
 export const EMPTY_STATE_MESSAGES = {
   NO_CALLS: {
     title: 'No Recent Calls',
@@ -190,7 +180,7 @@ export const EMPTY_STATE_MESSAGES = {
   },
 }
 
-// ===== App Metadata =====
+
 export const APP_META = {
   NAME: import.meta.env.VITE_APP_NAME || 'Hintro Dashboard',
   VERSION: import.meta.env.VITE_APP_VERSION || '1.0.0',
@@ -199,7 +189,7 @@ export const APP_META = {
   COPYRIGHT: `© ${new Date().getFullYear()} Hintro. Made in India 🇮🇳`,
 }
 
-// ===== Feature Flags =====
+
 export const FEATURES = {
   DARK_MODE: import.meta.env.VITE_ENABLE_DARK_MODE === 'true',
   ANALYTICS: import.meta.env.VITE_ENABLE_ANALYTICS === 'true',
